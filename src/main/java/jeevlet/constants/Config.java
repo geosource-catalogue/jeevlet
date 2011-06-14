@@ -32,5 +32,7 @@ public class Config {
 
 	public static final String STOP_GEONETWORK = "stop_geonetwork";
 	public static final String NODE_PREFIX = "node_prefix";
+	public static final String MAX_TOTAL_CONNECTIONS = "maxTotalConnections";
+	public static final String MAX_THREADS = "maxThreads";
 
 }

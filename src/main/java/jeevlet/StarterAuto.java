@@ -30,8 +30,11 @@ import jeevlet.utils.ConfigUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.restlet.Component;
+import org.restlet.Server;
+import org.restlet.data.Parameter;
 import org.restlet.data.Protocol;
 import org.restlet.routing.VirtualHost;
+import org.restlet.util.Series;
 
 public class StarterAuto {
 
@@ -52,6 +55,8 @@ public class StarterAuto {
 		// Get configuration
 		int appPort = Integer.parseInt(ConfigUtils.getProps(propertyFilePath).getProperty(Config.APP_PORT));
 		int listenPort = Integer.parseInt(ConfigUtils.getProps(propertyFilePath).getProperty(Config.LISTEN_PORT));
+		String maxTotalConnections = ConfigUtils.getProps(propertyFilePath).getProperty(Config.MAX_TOTAL_CONNECTIONS);
+		String maxThreads = ConfigUtils.getProps(propertyFilePath).getProperty(Config.MAX_THREADS);
 
 		// FIXME relatif path or automatic current path ...
 		String appPath = ConfigUtils.getProps(propertyFilePath).getProperty(Config.APP_PATH);
@@ -62,14 +67,22 @@ public class StarterAuto {
 		Logger.getLogger(JEEVLET_STARTER).debug("Host domain: " + hostDomain);
 		Logger.getLogger(JEEVLET_STARTER).debug("Host port: " + appPort);
 		Logger.getLogger(JEEVLET_STARTER).debug("Host stop port: " + listenPort);
+		Logger.getLogger(JEEVLET_STARTER).debug("Max total connections: " + maxTotalConnections);
+		Logger.getLogger(JEEVLET_STARTER).debug("Max threads: " + maxThreads);
 		Logger.getLogger(JEEVLET_STARTER).debug("Apps path: " + appPath);
 		Logger.getLogger(JEEVLET_STARTER).debug("Apps node prefix: " + nodePrefix);
 		
 		// Create a component
 		Component component = new Component();
-		component.getServers().add(Protocol.HTTP, appPort);
+		Server httpServer = new Server(Protocol.HTTP, appPort);
+		component.getServers().add(httpServer);
 		component.getServers().add(Protocol.HTTP, listenPort);
 		component.getClients().add(Protocol.FILE);
+
+		// Set up parameters for httpServer
+		// See http://www.restlet.org/documentation/2.0/jse/engine/index.html?org/restlet/engine/http/connector/BaseServerHelper.html
+		httpServer.getContext().getParameters().add("maxTotalConnections", maxTotalConnections);
+		httpServer.getContext().getParameters().add("maxThreads", maxThreads);
 
 		File dir = new File(appPath).getCanonicalFile();
 		String[] nodeList = dir.list(new FilenameFilter() {
@@ -103,7 +116,6 @@ public class StarterAuto {
 		hostHTTP.setHostPort(Integer.toString(listenPort));
 		hostHTTP.attach(new GeoNetworkStopperApplication(component));
 		component.getHosts().add(hostHTTP);
-
 		// Start component
 		component.start();
 		Logger.getLogger(JEEVLET_STARTER).debug("====== Jeevlet apps running ================");
