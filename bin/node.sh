@@ -41,16 +41,16 @@ function showUsage
   echo -e "  Default webapp path: $GEONETWORK_HOME"
   echo
   echo -e "Usage: ./`basename $0 $1` username password nodeid dburl"
-  echo -e "       ./`basename $0 $1` username password nodeid dburl dbpoolsize"
-  echo -e "       ./`basename $0 $1` username password nodeid dburl dbpoolsize dbdriver"
-  echo -e "       ./`basename $0 $1` username password nodeid dburl dbpoolsize dbdriver webapppath"
+  echo -e "       ./`basename $0 $1` username password nodeid dburl dbdriver"
+  echo -e "       ./`basename $0 $1` username password nodeid dburl dbdriver dbpoolsize"
+  echo -e "       ./`basename $0 $1` username password nodeid dburl dbdriver dbpoolsize webapppath"
   echo
   echo -e "Example:"
   echo -e "\t./`basename $0 $1` admin admin 42 jdbc:postgresql://localhost:5432/catdb"
-  echo -e "\t./`basename $0 $1` admin admin 42 jdbc:postgresql://localhost:5432/catdb 5"
-  echo -e "\t./`basename $0 $1` admin admin 42 jdbc:postgresql://localhost:5432/catdb 5 org.postgresql.Driver"
-  echo -e "\t./`basename $0 $1` admin gnos 42 jdbc:h2:/tmp/geonetwork42 2 org.h2.Driver"
-  echo -e "\t./`basename $0 $1` admin admin 42 jdbc:postgresql://localhost:5432/catdb 5 org.postgresql.Driver ../../web/geonetwork"
+  echo -e "\t./`basename $0 $1` admin admin 42 jdbc:postgresql://localhost:5432/catdb org.postgresql.Driver "
+  echo -e "\t./`basename $0 $1` admin admin 42 jdbc:postgresql://localhost:5432/catdb org.postgresql.Driver 5"
+  echo -e "\t./`basename $0 $1` admin gnos 42 jdbc:h2:/tmp/geonetwork42 org.h2.Driver 2"
+  echo -e "\t./`basename $0 $1` admin admin 42 jdbc:postgresql://localhost:5432/catdb org.postgresql.Driver 2 ../../web/geonetwork"
   echo
 }
 
@@ -91,7 +91,7 @@ cp $GEONETWORK_SRC/user-profiles.xml $GEONETWORK_TARGET/.
 cp $GEONETWORK_SRC/web.xml $GEONETWORK_TARGET/.
 
 echo "Setting db connection ..."
-java -classpath $GEONETWORK_SRC/lib/xalan-2.7.1.jar:$GEONETWORK_SRC/lib/serializer-2.7.1.jar org.apache.xalan.xslt.Process \
+java -classpath xalan-2.7.1.jar:serializer-2.7.1.jar org.apache.xalan.xslt.Process \
 	-PARAM user $gnusername \
 	-PARAM password $gnpassword \
 	-PARAM idNode $gnnodeid \
