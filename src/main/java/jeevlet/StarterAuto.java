@@ -93,6 +93,10 @@ public class StarterAuto {
 			}
 		});
 
+		if (nodeList == null) {
+			Logger.getLogger(JEEVLET_STARTER).debug("No nodes found in folder: " + appPath + ". Check your configuration.");
+			System.exit(-1);
+		}
 		Logger.getLogger(JEEVLET_STARTER).debug(nodeList.length + " nodes to start. Processing ...");
 		for (String webinfNode : nodeList) {
 			String nodeId = webinfNode.substring(8);

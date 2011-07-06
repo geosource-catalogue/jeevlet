@@ -135,7 +135,7 @@ public class JeevletServiceManager {
 		if (nodeId != null && !nodeId.equals(""))
 			webInfPath = "WEB-INF-" + nodeId + "/";
 
-		profilMan = new ProfileManager(appPath + webInfPath + file);
+		profilMan = new ProfileManager(null, appPath + webInfPath + file);
 	}
 
 	// ---------------------------------------------------------------------------
