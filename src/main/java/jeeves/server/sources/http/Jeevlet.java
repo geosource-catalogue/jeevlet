@@ -252,7 +252,8 @@ public class Jeevlet extends Restlet {
 		jeeves.dispatch(srvReq, session);
 
 		response.setEntity(srvReq.getRepresentation());
-
+		response.setStatus(new Status(srvReq.getStatusCode()));
+		
 		super.handle(request, response);
 	}
 }

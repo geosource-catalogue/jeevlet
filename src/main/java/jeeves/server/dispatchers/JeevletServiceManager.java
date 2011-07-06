@@ -720,8 +720,8 @@ public class JeevletServiceManager {
 			String styleSheet = outPage.getStyleSheet();
 			Element guiElem = outPage.invokeGuiServices(context, response,
 					vDefaultGui);
-
-			addPrefixes(guiElem, context.getLanguage(), req.getService());
+			
+		 	addPrefixes(guiElem, context.getLanguage(), req.getService());
 
 			Element rootElem = new Element(Jeeves.Elem.ROOT)
 					.addContent(guiElem).addContent(response);
@@ -811,9 +811,9 @@ public class JeevletServiceManager {
 		Element guiElem = outPage.invokeGuiServices(context, response,
 				vDefaultGui);
 
-		// Dispatch HTTP status code
-		// FIXME GN req.setStatusCode(outPage.getStatusCode());
-
+		// Dispatch HTTP status code 
+	 	req.setStatusCode(outPage.getStatusCode()); 
+	 	
 		addPrefixes(guiElem, context.getLanguage(), req.getService());
 
 		Element rootElem = new Element(Jeeves.Elem.ROOT).addContent(guiElem)

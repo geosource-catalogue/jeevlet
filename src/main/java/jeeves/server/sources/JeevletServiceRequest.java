@@ -125,6 +125,7 @@ public class JeevletServiceRequest extends ServiceRequest
 	public void setAddress (String  newAddress) { address  = newAddress; }
 
 	public void setStatusCode(int code) { statusCode = code; }
+	public int getStatusCode() { return statusCode; }
 
 	public void setInputMethod (InputMethod m)  { input  = m; }
 	public void setOutputMethod(OutputMethod m) { output = m; }
