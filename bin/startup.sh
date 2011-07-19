@@ -10,7 +10,7 @@ echo "Web app: $GEONETWORK_HOME"
 # FIXME : Remove Xalan from classpath because it may be used by Jeeves.TransformerFactoryFactory and cause XSL issues
 rm $JEEVLET_DEP_LIB/xalan-*.jar
 rm $GEONETWORK_HOME/WEB-INF/lib/xalan-*.jar
-
+rm jeevlet.log
 
 # Add all libs to classpath
 for f in $JEEVLET_LIB/*.jar; do CLASSPATH=$CLASSPATH:$f; done
@@ -23,4 +23,4 @@ echo $CLASSPATH
 
 
 # Start the app
-java -Xms128m -Xmx1024m -XX:MaxPermSize=128m -classpath $CLASSPATH jeevlet.StarterAuto `pwd` $*
+java -Xms128m -Xmx1024m -XX:MaxPermSize=128m -classpath $CLASSPATH jeevlet.StarterAuto `pwd` $* > jeevlet.log 2>&1 &

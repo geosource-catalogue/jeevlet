@@ -82,7 +82,7 @@ cp $GEONETWORK_SRC/config-stats-params.xml $GEONETWORK_TARGET/.
 cp $GEONETWORK_SRC/config-summary.xml $GEONETWORK_TARGET/.
 cp $GEONETWORK_SRC/config-notifier.xml $GEONETWORK_TARGET/.
 cp $GEONETWORK_SRC/geoserver-nodes.xml $GEONETWORK_TARGET/.
-cp $GEONETWORK_SRC/log4j.cfg $GEONETWORK_TARGET/.
+ln -s $GEONETWORK_SRC/log4j.cfg $GEONETWORK_TARGET/log4j.cfg
 cp $GEONETWORK_SRC/mime-types.properties $GEONETWORK_TARGET/.
 cp $GEONETWORK_SRC/oasis-catalog.xml $GEONETWORK_TARGET/.
 cp $GEONETWORK_SRC/schemaplugin-uri-catalog.xml $GEONETWORK_TARGET/.

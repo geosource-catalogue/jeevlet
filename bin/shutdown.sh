@@ -1,7 +1,11 @@
 JEEVLET_LIB=../target
-GEONETWORK_LIB=../../web/target
+JEEVLET_DEP_LIB=$JEEVLET_LIB/lib
 
-for jarFile in $JEEVLET_LIB/*.jar; do CLASSPATH="$CLASSPATH:$jarFile"; done
-for jarFile in $GEONETWORK_LIB/geonetwork/WEB-INF/lib/*.jar; do CLASSPATH="$CLASSPATH:$jarFile"; done
+for f in $JEEVLET_LIB/*.jar; do CLASSPATH=$CLASSPATH:$f; done
+for f in $JEEVLET_DEP_LIB/*.jar; do CLASSPATH=$CLASSPATH:$f; done
+for f in ../lib/*.jar; do CLASSPATH=$CLASSPATH:$f; done
+echo $CLASSPATH
 
-java -classpath $CLASSPATH jeevlet.StopperAuto 
+
+java -classpath $CLASSPATH jeevlet.StopperAuto
+
