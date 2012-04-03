@@ -5,6 +5,7 @@
   <xsl:param name="user"/>
   <xsl:param name="password"/>
   <xsl:param name="idNode"/>
+  <xsl:param name="gnnodeprefix"/>
   <xsl:param name="dbDriver"/>
   <xsl:param name="dbUrl"/>
   <xsl:param name="poolSize"/>
@@ -68,13 +69,11 @@
           select="appHandler/param[@name!='luceneDir' 
 							and @name!='guiConfig'
 							and @name!='luceneConfig'
-							and @name!='licenseDir'
 							and @name!='metadataNotifierConfig'
-							and @name!='dataDir'
 							and @name!='summaryConfig']"/>
-        <param name="luceneDir">
+		<param name="{$gnnodeprefix}-{$idNode}.dir">
           <xsl:attribute name="value">
-            <xsl:value-of select="concat('WEB-INF-',$idNode,'/lucene')"/>
+            <xsl:value-of select="concat('../../data/',$idNode)"/>
           </xsl:attribute>
         </param>
         <param name="luceneConfig">
@@ -90,16 +89,6 @@
         <param name="metadataNotifierConfig">
           <xsl:attribute name="value">
             <xsl:value-of select="concat('WEB-INF-',$idNode,'/config-notifier.xml')"/>
-          </xsl:attribute>
-        </param>
-        <param name="licenseDir">
-          <xsl:attribute name="value">
-            <xsl:value-of select="concat('WEB-INF-',$idNode,'/licenses')"/>
-          </xsl:attribute>
-        </param>
-        <param name="dataDir">
-          <xsl:attribute name="value">
-            <xsl:value-of select="concat('../../data/',$idNode)"/>
           </xsl:attribute>
         </param>
         <param name="summaryConfig">

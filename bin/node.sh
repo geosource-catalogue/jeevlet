@@ -3,6 +3,7 @@
 gnusername="$1"
 gnpassword="$2"
 gnnodeid="$3"
+gnnodeprefix="geosource"
 gndburl="$4"
 gndbdriver="$5"
 gndbdriver_default="org.postgresql.Driver"
@@ -96,6 +97,7 @@ java -classpath xalan-2.7.1.jar:serializer-2.7.1.jar org.apache.xalan.xslt.Proce
 	-PARAM user $gnusername \
 	-PARAM password $gnpassword \
 	-PARAM idNode $gnnodeid \
+	-PARAM gnnodeprefix $gnnodeprefix \
 	-PARAM dbDriver $gndbdriver \
 	-PARAM dbUrl $gndburl \
 	-PARAM poolSize $gnpoolsize \
