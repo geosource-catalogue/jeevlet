@@ -207,7 +207,7 @@ public class JeevletServiceRequestFactory {
 
 		if (pos == -1)
 			return null;
-		String result = myUrl.substring(pos + 5, pos + 7);
+		String result = myUrl.substring(pos + 5, pos + 8);
 		return result;
 	}
 
