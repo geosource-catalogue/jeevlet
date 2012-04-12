@@ -34,6 +34,7 @@ import jeeves.exceptions.ServiceNotAllowedEx;
 import jeeves.exceptions.ServiceNotFoundEx;
 import jeeves.exceptions.ServiceNotMatchedEx;
 import jeeves.interfaces.Service;
+import jeeves.monitor.MonitorManager;
 import jeeves.server.ProfileManager;
 import jeeves.server.ServiceConfig;
 import jeeves.server.UserSession;
@@ -72,6 +73,7 @@ public class JeevletServiceManager {
 	private ProviderManager providMan;
 	private ProfileManager profilMan;
 	private SerialFactory serialFact;
+	private MonitorManager monitorManager;
 
 	private String appPath;
 	private String baseUrl;
@@ -114,9 +116,13 @@ public class JeevletServiceManager {
 	public void setProviderMan(ProviderManager p) {
 		providMan = p;
 	}
-
+	
 	public void setSerialFactory(SerialFactory s) {
 		serialFact = s;
+	}
+	
+	public void setMonitorMan  (MonitorManager mm) { 
+		monitorManager  = mm; 
 	}
 
 	// ---------------------------------------------------------------------------
@@ -331,7 +337,7 @@ public class JeevletServiceManager {
 	// ---------------------------------------------------------------------------
 
 	public ServiceContext createServiceContext(String name) {
-		ServiceContext context = new ServiceContext(name, providMan,
+		ServiceContext context = new ServiceContext(name, monitorManager, providMan,
 				serialFact, profilMan, htContexts);
 
 		context.setBaseUrl(baseUrl);
@@ -355,7 +361,7 @@ public class JeevletServiceManager {
 		// --- create the corresponding service request
 
 		ServiceContext context = new ServiceContext(req.getService(),
-				providMan, serialFact, profilMan, htContexts);
+				monitorManager, providMan, serialFact, profilMan, htContexts);
 
 		context.setBaseUrl(baseUrl);
 		context.setLanguage(req.getLanguage());

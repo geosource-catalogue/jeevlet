@@ -30,13 +30,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
+
 import javax.xml.transform.TransformerFactory;
+
 import jeeves.constants.ConfigFile;
 import jeeves.constants.Jeeves;
 import jeeves.exceptions.BadInputEx;
 import jeeves.interfaces.Activator;
 import jeeves.interfaces.ApplicationHandler;
 import jeeves.interfaces.Logger;
+import jeeves.monitor.MonitorManager;
 import jeeves.server.JeevesEngine;
 import jeeves.server.ScheduleManager;
 import jeeves.server.UserSession;
@@ -87,7 +90,7 @@ public class JeevletEngine {
 	private List appHandList = new ArrayList();
 	private Vector vAppHandlers = new Vector();
 	private Vector vActivators = new Vector();
-
+	private MonitorManager monitorManager;
 	private String nodeId = "";
 
 	// ---------------------------------------------------------------------------
@@ -105,6 +108,7 @@ public class JeevletEngine {
 			String nodeId) throws JeevletException {
 		try {
 			this.appPath = appPath;
+            monitorManager = new MonitorManager(null);
 
 			long start = System.currentTimeMillis();
 
@@ -136,11 +140,13 @@ public class JeevletEngine {
 			serviceMan.setAppPath(appPath);
 			serviceMan.setProviderMan(providerMan);
 			serviceMan.setSerialFactory(serialFact);
+			serviceMan.setMonitorMan(monitorManager);
 			serviceMan.setBaseUrl(baseUrl);
 
 			scheduleMan.setAppPath(appPath);
 			scheduleMan.setProviderMan(providerMan);
 			scheduleMan.setSerialFactory(serialFact);
+			scheduleMan.setMonitorManager(monitorManager);
 			scheduleMan.setBaseUrl(baseUrl);
 
 			loadConfigFile(configPath, Jeeves.CONFIG_FILE, serviceMan);
@@ -246,6 +252,13 @@ public class JeevletEngine {
 
 		for (int i = 0; i < schedList.size(); i++)
 			initSchedules((Element) schedList.get(i));
+
+        //--- init monitoring - TODO for JeevletEngine
+//
+//        List<Element> monitorList = configRoot.getChildren(ConfigFile.Child.MONITORS);
+//
+//        for(int i=0; i<monitorList.size(); i++)
+//            monitorManager.initMonitors(monitorList.get(i));
 
 		// --- recurse on includes
 
