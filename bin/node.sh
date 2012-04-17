@@ -4,6 +4,8 @@ gnusername="$1"
 gnpassword="$2"
 gnnodeid="$3"
 gnnodeprefix="geosource"
+gnwebappname="geosource"
+gninstalldir="/applications/geosource"
 gndburl="$4"
 gndbdriver="$5"
 gndbdriver_default="org.postgresql.Driver"
@@ -74,6 +76,7 @@ echo "      DB URL   : $gndburl"
 echo "      DB user  : $gnusername"
 echo "Creating directory ..."
 mkdir $GEONETWORK_HOME/WEB-INF-$gnnodeid
+mkdir $gninstalldir/data/$gnnodeid
 mkdir $GEONETWORK_HOME/WEB-INF-$gnnodeid/lucene
 
 echo "Copying default configuration file ..."
@@ -98,6 +101,8 @@ java -classpath xalan-2.7.1.jar:serializer-2.7.1.jar org.apache.xalan.xslt.Proce
 	-PARAM password $gnpassword \
 	-PARAM idNode $gnnodeid \
 	-PARAM gnnodeprefix $gnnodeprefix \
+	-PARAM gninstalldir $gninstalldir \
+	-PARAM gnwebappname $gnwebappname \
 	-PARAM dbDriver $gndbdriver \
 	-PARAM dbUrl $gndburl \
 	-PARAM poolSize $gnpoolsize \

@@ -6,6 +6,8 @@
   <xsl:param name="password"/>
   <xsl:param name="idNode"/>
   <xsl:param name="gnnodeprefix"/>
+  <xsl:param name="gnwebappname"/>
+  <xsl:param name="gninstalldir"/>
   <xsl:param name="dbDriver"/>
   <xsl:param name="dbUrl"/>
   <xsl:param name="poolSize"/>
@@ -71,11 +73,17 @@
 							and @name!='luceneConfig'
 							and @name!='metadataNotifierConfig'
 							and @name!='summaryConfig']"/>
-		<param name="{$gnnodeprefix}-{$idNode}.dir">
+        <!-- Data dir is defined for each nodes -->
+        <param name="{$gnnodeprefix}-{$idNode}.dir">
           <xsl:attribute name="value">
-            <xsl:value-of select="concat('../../data/',$idNode)"/>
+            <xsl:value-of select="concat($gninstalldir, '/data/', $idNode)"/>
           </xsl:attribute>
         </param>
+        <!-- Schema, Codelist, and resources are shared. -->
+        <param name="{$gnnodeprefix}-{$idNode}.schema.dir" value="{$gninstalldir}/web/{$gnwebappname}/WEB-INF/data/config/schema_plugins"/>
+        <param name="{$gnnodeprefix}-{$idNode}.codeList.dir" value="{$gninstalldir}/web/{$gnwebappname}/WEB-INF/data/config/codelist"/>
+        <param name="{$gnnodeprefix}-{$idNode}.resources.dir" value="{$gninstalldir}/web/{$gnwebappname}"/>
+        
         <param name="luceneConfig">
           <xsl:attribute name="value">
             <xsl:value-of select="concat('WEB-INF-',$idNode,'/config-lucene.xml')"/>
@@ -101,7 +109,9 @@
 
       <xsl:copy-of select="services"/>
 
-      <xsl:copy-of select="include"/>
+      <xsl:for-each select="include">
+        <include>../WEB-INF/<xsl:value-of select="."/></include>
+      </xsl:for-each>
     </xsl:copy>
   </xsl:template>
 
